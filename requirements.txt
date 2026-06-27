@@ -1,0 +1,11 @@
+anthropic
+beautifulsoup4
+fastapi
+lxml
+pandas
+pgeocode
+pydantic
+pymongo
+python-dotenv
+requests
+uvicorn

@@ -1,0 +1,10 @@
+.env
+*.csv
+*.xlsx
+*.xml
+*.json
+Algo_BAL_calculator/
+venv/
+.venv/
+*.zip
+__pycache__/

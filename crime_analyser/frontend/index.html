@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSW Crime Report</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>NSW Crime Report</h1>
+        <p>Explore recorded crime statistics by postcode across New South Wales</p>
+    </header>
+
+    <main>
+        <section class="controls">
+            <div class="search-container">
+                <label for="searchInput">Search postcode or suburb</label>
+                <input type="text" id="searchInput" placeholder="e.g. 2000 or Sydney" autocomplete="off">
+                <div id="searchDropdown" class="dropdown hidden"></div>
+            </div>
+            <div class="category-container">
+                <label for="categorySelect">Crime category</label>
+                <select id="categorySelect">
+                    <option value="">Select a category</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="mapSection">
+            <div id="map"></div>
+        </section>
+
+        <!-- All-categories overview -->
+        <section id="overviewSection" class="hidden">
+            <div class="card">
+                <h3 class="card-title">Crime Overview &mdash; <span id="overviewTitle"></span></h3>
+                <p class="card-hint">Click a bar to view detailed breakdown</p>
+                <div class="chart-area" id="overviewChartWrap">
+                    <canvas id="overviewChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detail view -->
+        <section id="resultsSection" class="hidden">
+            <div id="loading">
+                <div class="spinner"></div>
+                <p>Loading data...</p>
+            </div>
+
+            <div id="dataContent" class="hidden">
+                <!-- Plain-English summary -->
+                <p id="summaryLine" class="summary-line"></p>
+
+                <!-- 6 stat cards: 3 per row -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Total since 1995</div>
+                        <div class="stat-value" id="totalCount">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Last year (2025)</div>
+                        <div class="stat-value" id="lastYearCount">-</div>
+                    </div>
+                    <div class="stat-card" id="trendCard">
+                        <div class="stat-label">5-year trend</div>
+                        <div class="stat-value" id="trendDirection">-</div>
+                    </div>
+                    <div class="stat-card" id="yoyCard">
+                        <div class="stat-label">vs previous year</div>
+                        <div class="stat-value" id="yoyChange">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Peak year</div>
+                        <div class="stat-value" id="peakYear">-</div>
+                        <div class="stat-sub" id="peakYearCount"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Busiest month</div>
+                        <div class="stat-value stat-value-text" id="busiestMonth">-</div>
+                    </div>
+                </div>
+
+                <!-- Trend chart with range buttons inside card -->
+                <div class="card">
+                    <div class="card-toolbar">
+                        <div class="range-buttons">
+                            <button class="range-btn active" data-range="all">All</button>
+                            <button class="range-btn" data-range="10">Last 10 years</button>
+                            <button class="range-btn" data-range="5">Last 5 years</button>
+                        </div>
+                    </div>
+                    <div class="chart-area chart-area-fixed">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Heatmap -->
+                <div class="card heatmap-card">
+                    <h3 class="card-title">Monthly Breakdown by Year</h3>
+                    <div class="heatmap-scroll">
+                        <div id="heatmap"></div>
+                    </div>
+                </div>
+
+                <!-- Subcategory breakdown -->
+                <div class="card">
+                    <div class="chart-area" id="subcategoryChartWrap">
+                        <canvas id="subcategoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Subcategory trend (hidden until bar click) -->
+                <div class="card hidden" id="subTrendSection">
+                    <div class="chart-area chart-area-fixed">
+                        <canvas id="subTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Source: NSW Bureau of Crime Statistics and Research (BOCSAR) &middot; Recorded incidents &middot; 1995&ndash;2025</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
